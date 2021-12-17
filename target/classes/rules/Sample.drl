@@ -1,0 +1,569 @@
+package com.sample
+ 
+import com.sample.Fontface.Answer;
+import com.sample.Fontface.Question;
+import com.sample.Fontface;
+
+rule "Init"
+	when
+	then
+		String [] answers = {"Book", "Infographic", "Newspaper", "Invitation"};
+		Question question = new Question("Start out by choosing the kind of project that you'll need your typeface for.",answers);
+		insert(question);
+end
+ 
+rule "Question"
+    when
+    	q: Question()
+    then
+    	System.out.println(q.content); 
+    	q.choosed = Fontface.GuiWindow(q);
+    	System.out.println(q.choosed);
+    	Answer answer = new Answer(q.content, q.choosed);
+    	insert(answer);
+    	retract(q);
+end
+
+rule "Are you completely in doubt?"
+	when
+		a: Answer(question == "Start out by choosing the kind of project that you'll need your typeface for.", variant == "Book")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Are you completely in doubt?",answers);
+		insert(question);
+end
+
+rule "FINALE Caslon"
+	when
+		a: Answer(question == "Are you completely in doubt?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Caslon");
+		System.exit(0);
+end
+
+rule "A champion in usability, perhaps?"
+	when
+		a: Answer(question == "Are you completely in doubt?", variant == "No")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("A champion in usability, perhaps?",answers);
+		insert(question);
+end
+
+rule "FINALE Minion"
+	when
+		a: Answer(question == "A champion in usability, perhaps?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Minion");
+		System.exit(0);
+end
+
+rule "Everybody loves garamond"
+	when
+		a: Answer(question == "A champion in usability, perhaps?", variant == "No")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Everybody loves garamond",answers);
+		insert(question);
+end
+
+rule "But perhaps one would want a larger eye?"
+	when 
+		a: Answer(question == "Everybody loves garamond", variant == "Yes")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("But perhaps one would want a larger eye?",answers);
+		insert(question);
+end
+
+rule "FINALE Sabon"
+	when
+		a: Answer(question == "But perhaps one would want a larger eye?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Sabon");
+		System.exit(0);
+end
+		
+rule "FINALE Garamond"
+	when
+		a: Answer(question == "But perhaps one would want a larger eye?", variant == "No")
+	then
+		Fontface.GuiFinal("Garamond");
+		System.exit(0);
+end	
+
+rule "So you want a sans serif, is that the case?"
+	when
+		a: Answer(question == "Everybody loves garamond", variant == "No")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("So you want a sans serif, is that the case?",answers);
+		insert(question);
+end
+
+rule "FINALE Optima"
+	when
+		a: Answer(question == "So you want a sans serif, is that the case?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Optima");
+		System.exit(0);
+end	
+
+rule "What is your opinion of Eric Gill"
+	when
+		a: Answer(question == "So you want a sans serif, is that the case?", variant == "No")
+	then
+		String [] answers = {"Good", "Bad"};
+		Question question = new Question("What is your opinion of Eric Gill",answers);
+		insert(question);
+end
+
+rule "FINALE Joanna"
+	when
+		a: Answer(question == "What is your opinion of Eric Gill", variant == "Good")
+	then
+		Fontface.GuiFinal("Joanna");
+		System.exit(0);
+end	
+
+rule "Humanistic forms please your eye?"
+	when
+		a: Answer(question == "What is your opinion of Eric Gill", variant == "Bad")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Humanistic forms please your eye?",answers);
+		insert(question);
+end
+
+rule "Okay to question of food"
+	when
+		a: Answer(question == "Humanistic forms please your eye?", variant == "Yes")
+	then
+		String [] answers = {"Gouda", "Emmental"};
+		Question question = new Question("Okay to question of food",answers);
+		insert(question);
+end
+
+rule "FINALE FF Scala"
+	when
+		a: Answer(question == "Okay to question of food", variant == "Gouda")
+	then
+		Fontface.GuiFinal("FF Scala");
+		System.exit(0);
+end
+
+rule "FINALE Syntax"
+	when
+		a: Answer(question == "Okay to question of food", variant == "Emmental")
+	then
+		Fontface.GuiFinal("Syntax");
+		System.exit(0);
+end
+
+rule "FINALE Baskerville"
+	when
+		a: Answer(question == "Humanistic forms please your eye?", variant == "No")
+	then
+		Fontface.GuiFinal("Baskerville");
+		System.exit(0);
+end
+
+rule "We all like something very condensed, yes?"
+	when
+		a: Answer(question == "Start out by choosing the kind of project that you'll need your typeface for.", variant == "Infographic")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("We all like something very condensed, yes?",answers);
+		insert(question);
+end
+
+rule "FINALE Univers"
+	when
+		a: Answer(question == "We all like something very condensed, yes?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Univers");
+		System.exit(0);
+end
+
+rule "Got a lot of tables, have you?"
+	when
+		a: Answer(question == "We all like something very condensed, yes?", variant == "No")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Got a lot of tables, have you?",answers);
+		insert(question);
+end
+
+rule "FINALE Letter Gothic"
+	when
+		a: Answer(question == "Got a lot of tables, have you?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Letter Gothic");
+		System.exit(0);
+end
+
+rule "You cried when watching terminator"
+	when
+		a: Answer(question == "Got a lot of tables, have you?", variant == "No")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("You cried when watching terminator",answers);
+		insert(question);
+end
+
+rule "FINALE OCR"
+	when
+		a: Answer(question == "You cried when watching terminator", variant == "Yes")
+	then
+		Fontface.GuiFinal("OCR");
+		System.exit(0);
+end
+
+rule "I must say that this flowchart is looking hot"
+	when
+		a: Answer(question == "You cried when watching terminator", variant == "No")
+	then
+		String [] answers = {"Yes"};
+		Question question = new Question("I must say that this flowchart is looking hot",answers);
+		insert(question);
+end
+
+rule "FINALE FF Din"
+	when
+		a: Answer(question == "I must say that this flowchart is looking hot", variant == "Yes")
+	then
+		Fontface.GuiFinal("FF Din");
+		System.exit(0);
+end
+
+rule "Newspaper"
+	when
+		a: Answer(question == "Start out by choosing the kind of project that you'll need your typeface for.", variant == "Newspaper")
+	then
+		String [] answers = {"Text Face", "Combination", "Display"};
+		Question question = new Question("Newspaper",answers);
+		insert(question);
+end
+
+rule "Do people call you boring from time to time?"
+	when
+		a: Answer(question == "Newspaper", variant == "Text Face")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Do people call you boring from time to time?",answers);
+		insert(question);
+end
+
+rule "FINALE Times"
+	when
+		a: Answer(question == "Do people call you boring from time to time?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Times");
+		System.exit(0);
+end
+
+rule "How about something heavily used?"
+	when
+		a: Answer(question == "Do people call you boring from time to time?", variant == "No")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("How about something heavily used?",answers);
+		insert(question);
+end
+
+rule "FINALE Miller"
+	when
+		a: Answer(question == "How about something heavily used?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Miller");
+		System.exit(0);
+end
+
+rule "How about something award winning?"
+	when
+		a: Answer(question == "How about something heavily used?", variant == "No")
+	then
+		String [] answers = {"Good", "Bad"};
+		Question question = new Question("How about something award winning?",answers);
+		insert(question);
+end
+
+rule "FINALE Proforma"
+	when
+		a: Answer(question == "How about something award winning?", variant == "Good")
+	then
+		Fontface.GuiFinal("Proforma");
+		System.exit(0);
+end
+
+rule "FINALE Arnhem Textface"
+	when
+		a: Answer(question == "How about something award winning?", variant == "Bad")
+	then
+		Fontface.GuiFinal("Arnhem");
+		System.exit(0);
+end
+
+rule "Think mr. spiekermann is mostly right?"
+	when
+		a: Answer(question == "Newspaper", variant == "Combination")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Think mr. spiekermann is mostly right?",answers);
+		insert(question);
+end
+
+rule "FINALE Arnhem Combination"
+	when
+		a: Answer(question == "Think mr. spiekermann is mostly right?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Arnhem");
+		System.exit(0);
+end
+
+rule "The netherlands is nice, right?"
+	when
+		a: Answer(question == "Think mr. spiekermann is mostly right?", variant == "No")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("The netherlands is nice, right?",answers);
+		insert(question);
+end
+
+rule "Mmm. Spiky serifs are nice"
+	when
+		a: Answer(question == "The netherlands is nice, right?", variant == "Yes")
+	then
+		String [] answers = {"OK"};
+		Question question = new Question("Mmm. Spiky serifs are nice",answers);
+		insert(question);
+end
+
+rule "FINALE Swift"
+	when
+		a: Answer(question == "Mmm. Spiky serifs are nice", variant == "OK")
+	then
+		Fontface.GuiFinal("Swift");
+		System.exit(0);
+end
+
+rule "FINALE Get out of my flowchart!"
+	when
+		a: Answer(question == "The netherlands is nice, right?", variant == "No")
+	then
+		Fontface.GuiFinal("Get out of my flowchart!");
+		System.exit(0);
+end
+
+rule "Do you like it traditional?"
+	when
+		a: Answer(question == "Newspaper", variant == "Display")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Do you like it traditional?",answers);
+		insert(question);
+end
+
+rule "It's okay with you if it's Swiss?"
+	when
+		a: Answer(question == "Do you like it traditional?", variant == "Yes")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("It's okay with you if it's Swiss?",answers);
+		insert(question);
+end
+
+rule "FINALE Helvetica Swiss"
+	when
+		a: Answer(question == "It's okay with you if it's Swiss?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Helvetica");
+		System.exit(0);
+end
+
+rule "Okay, to a question of age"
+	when
+		a: Answer(question == "It's okay with you if it's Swiss?", variant == "No")
+	then
+		String [] answers = {"New", "Old"};
+		Question question = new Question("Okay, to a question of age",answers);
+		insert(question);
+end
+
+rule "FINALE Interstate"
+	when
+		a: Answer(question == "Okay, to a question of age", variant == "New")
+	then
+		Fontface.GuiFinal("Interstate");
+		System.exit(0);
+end		
+
+rule "FINALE Franklin Gothic"
+	when
+		a: Answer(question == "Okay, to a question of age", variant == "Old")
+	then
+		Fontface.GuiFinal("Franklin Gothic");
+		System.exit(0);
+end	
+
+rule "Something modern, yes plainspoken"
+	when
+		a: Answer(question == "Do you like it traditional?", variant == "No")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Something modern, yes plainspoken",answers);
+		insert(question);
+end
+
+rule "FINALE Gotham"
+	when
+		a: Answer(question == "Something modern, yes plainspoken", variant == "Yes")
+	then
+		Fontface.GuiFinal("Gotham");
+		System.exit(0);
+end	
+
+rule "Not afraid to be asked if you live in the nineties?"
+	when
+		a: Answer(question == "Something modern, yes plainspoken", variant == "No")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Not afraid to be asked if you live in the nineties?",answers);
+		insert(question);
+end
+
+rule "FINALE Helvetica nineties"
+	when
+		a: Answer(question == "Not afraid to be asked if you live in the nineties?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Helvetica");
+		System.exit(0);
+end	
+
+rule "FINALE FF Meta"
+	when
+		a: Answer(question == "Not afraid to be asked if you live in the nineties?", variant == "No")
+	then
+		Fontface.GuiFinal("FF Meta");
+		System.exit(0);
+end	
+
+rule "Like something handwritten, do you?"
+	when
+		a: Answer(question == "Start out by choosing the kind of project that you'll need your typeface for.", variant == "Invitation")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Like something handwritten, do you?",answers);
+		insert(question);
+end
+
+rule "Something calligraphic, maybe?"
+	when
+		a: Answer(question == "Like something handwritten, do you?", variant == "Yes")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Something calligraphic, maybe?",answers);
+		insert(question);
+end
+
+rule "FINALE Zapfino"
+	when
+		a: Answer(question == "Something calligraphic, maybe?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Zapfino");
+		System.exit(0);
+end	
+
+rule "FINALE FF Erikrighthand"
+	when
+		a: Answer(question == "Something calligraphic, maybe?", variant == "No")
+	then
+		Fontface.GuiFinal("FF Erikrighthand");
+		System.exit(0);
+end	
+
+rule "How about something a bit fancy?"
+	when
+		a: Answer(question == "Like something handwritten, do you?", variant == "No")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("How about something a bit fancy?",answers);
+		insert(question);
+end
+
+rule "What do you choose:"
+	when
+		a: Answer(question == "How about something a bit fancy?", variant == "Yes")
+	then
+		String [] answers = {"Thin hairlines", "Thinner hairlines"};
+		Question question = new Question("What do you choose:",answers);
+		insert(question);
+end
+
+rule "FINALE Bodoni thin"
+	when
+		a: Answer(question == "What do you choose:", variant == "Thin hairlines")
+	then
+		Fontface.GuiFinal("Bodoni");
+		System.exit(0);
+end	
+
+rule "Readability?"
+	when
+		a: Answer(question == "What do you choose:", variant == "Thinner hairlines")
+	then
+		String [] answers = {"Yes", "No"};
+		Question question = new Question("Readability?",answers);
+		insert(question);
+end
+
+rule "FINALE Walbaum"
+	when
+		a: Answer(question == "Readability?", variant == "Yes")
+	then
+		Fontface.GuiFinal("Walbaum");
+		System.exit(0);
+end	
+
+rule "FINALE Didot"
+	when
+		a: Answer(question == "Readability?", variant == "No")
+	then
+		Fontface.GuiFinal("Didot");
+		System.exit(0);
+end	
+
+rule "Something fun, then?"
+	when
+		a: Answer(question == "How about something a bit fancy?", variant == "No")
+	then
+		String [] answers = {"OK"};
+		Question question = new Question("Something fun, then?",answers);
+		insert(question);
+end
+
+rule "Are you alone?"
+	when
+		a: Answer(question == "Something fun, then?", variant == "OK")
+	then
+		String [] answers = {"Yes"};
+		Question question = new Question("Are you alone?",answers);
+		insert(question);
+end
+
+rule "Okay then, come with me"
+	when
+		a: Answer(question == "Are you alone?", variant == "Yes")
+	then
+		String [] answers = {"OK"};
+		Question question = new Question("Okay then, come with me",answers);
+		insert(question);
+end
+
+rule "FINALE Comic Sans"
+	when
+		a: Answer(question == "Okay then, come with me")
+	then
+		Fontface.GuiFinal("Comic Sans");
+		System.exit(0);
+end	
