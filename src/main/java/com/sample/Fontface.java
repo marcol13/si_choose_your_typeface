@@ -27,33 +27,12 @@ public class Fontface {
         }
     }
     
-    public static String GuiWindow(Question question) {
-		int option = JOptionPane.showOptionDialog(null, question.content, "Typeface project", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, question.answers, null);
-		return question.answers[option];
+    public static String GuiWindow(String content, String [] answers) {
+		int option = JOptionPane.showOptionDialog(null, content, "Typeface project", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, answers, null);
+		return answers[option];
     }
     
     public static void GuiFinal(String answer) {
-    	JOptionPane.showMessageDialog(null, "Your typeface: " + answer, "Typeface project", JOptionPane.PLAIN_MESSAGE);
-    }
-    
-    public static class Answer{
-    	public String question;
-    	public String variant;
-    	
-    	public Answer(String question, String variant) {
-    		this.question = question;
-    		this.variant = variant;
-    	}
-    }
-    
-    public static class Question {
-    	public String content;
-    	public String answers []; 
-    	public String choosed;
-    	
-    	public Question(String content, String [] answers) {
-    		this.content = content;
-    		this.answers = answers;
-    	}
+    	JOptionPane.showMessageDialog(null, answer, "Typeface project", JOptionPane.PLAIN_MESSAGE);
     }
 }
