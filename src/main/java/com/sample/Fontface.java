@@ -29,6 +29,11 @@ public class Fontface {
     
     public static String GuiWindow(String content, String [] answers) {
 		int option = JOptionPane.showOptionDialog(null, content, "Typeface project", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, answers, null);
+		
+		if(option == -1) {
+			System.exit(0);
+		}
+		
 		return answers[option];
     }
     
