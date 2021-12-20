@@ -20,8 +20,6 @@ rule "Question"
     	Answer answer = new Answer(q.getContent(), q.getChoosed());
     	insert(answer);
     	retract(q);
-    	//TODO
-    	//Czy retract powinien tu byæ? Czy powinniœmy przechowywaæ wszystkie pytania w bazie wiedzy i po prostu je updatowaæ?
 end
 
 rule "Init"
